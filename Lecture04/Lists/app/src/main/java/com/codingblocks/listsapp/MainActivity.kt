@@ -3,7 +3,9 @@ package com.codingblocks.listsapp
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.list_item_color.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +29,16 @@ class MainActivity : AppCompatActivity() {
             colors
         )
         lvColors.adapter = colorAdapter
+
+        lvColors.setOnItemClickListener { parent, view, position, id ->
+
+            Toast.makeText(
+                this,
+                "Clicked on $position : ${view.tvColor.text}",
+                Toast.LENGTH_SHORT
+            ).show()
+
+        }
 
     }
 }
