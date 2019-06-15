@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         btnOpenAct.setOnClickListener {
             val intent = Intent(this, SecondActivity::class.java)
+            intent.putExtra("data", etData.text.toString())
             startActivity(intent)
         }
 

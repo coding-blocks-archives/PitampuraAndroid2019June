@@ -7,6 +7,7 @@
     tools:context=".SecondActivity">
 
     <TextView
+        android:id="@+id/tvData"
         android:textSize="30sp"
         android:text="SECOND SCREEN"
         android:layout_gravity="center"
