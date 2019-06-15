@@ -12,5 +12,12 @@
         android:id="@+id/btnOpenAct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <Button
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:text="CLOSE"
+        android:id="@+id/btnClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </FrameLayout>
