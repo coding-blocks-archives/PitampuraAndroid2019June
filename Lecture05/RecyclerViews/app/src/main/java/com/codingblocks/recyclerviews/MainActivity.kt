@@ -2,6 +2,7 @@ package com.codingblocks.recyclerviews
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -13,7 +14,12 @@ class MainActivity : AppCompatActivity() {
 
         val courses = genNRandomCourses(200)
 
-        rvCourses.layoutManager = LinearLayoutManager(this)
+        rvCourses.layoutManager = GridLayoutManager(
+            this,
+            4,
+            GridLayoutManager.HORIZONTAL,
+            false
+        )
         rvCourses.adapter = CourseAdapter(courses)
 
     }

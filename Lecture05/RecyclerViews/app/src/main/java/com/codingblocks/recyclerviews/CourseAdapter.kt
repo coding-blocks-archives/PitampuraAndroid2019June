@@ -25,6 +25,9 @@ class CourseAdapter(
 
         val course = courseList[position]
         holder.itemView.tvCourseName.text = course.name
+        holder.itemView.tvTeacher.text = course.teacher
+        holder.itemView.tvCenter.text = course.center
+        holder.itemView.tvLectures.text = course.lectures.toString()
 
     }
 
