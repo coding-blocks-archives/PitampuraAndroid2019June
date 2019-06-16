@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.graphics.ColorUtils
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,12 +45,14 @@ class MainActivity : AppCompatActivity() {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
+            Log.d("LIST", "$position : ${convertView.toString()}")
+            val li = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+            val itemView = convertView ?: li.inflate(R.layout.list_item_color, parent, false)
+
             val id = nums[position]
             val colorName = cols[position % 15]
             val color = Color.parseColor(colorName)
-
-            val li = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val itemView = li.inflate(R.layout.list_item_color, parent, false)
 
             itemView.llColorBox.setBackgroundColor(color)
             itemView.tvColor.text = colorName
