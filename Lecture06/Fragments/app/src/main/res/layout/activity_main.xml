@@ -7,13 +7,37 @@
     android:weightSum="2"
     tools:context=".MainActivity">
 
-    <fragment
-        android:id="@+id/fragment1"
-        android:name="com.codingblocks.fragments.FragmentMarvel"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/marvel"
+            android:text="Marvel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/dc"
+            android:text="DC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!--<fragment-->
+        <!--android:id="@+id/fragment1"-->
+        <!--android:name="com.codingblocks.fragments.FragmentDC"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--tools:layout="@layout/fragment_fragment_dc" />-->
+
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:layout="@layout/fragment_fragment_dc" />
+        android:layout_weight="1" />
 
     <!--<include-->
     <!--layout="@layout/header_main"/>-->
