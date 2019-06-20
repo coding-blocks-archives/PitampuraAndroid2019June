@@ -7,5 +7,14 @@
     android:weightSum="2"
     tools:context=".MainActivity">
 
-    <include layout="@layout/header_main" />
+    <fragment
+        android:id="@+id/fragment1"
+        android:name="com.codingblocks.fragments.FragmentMarvel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:layout="@layout/fragment_fragment_dc" />
+
+    <!--<include-->
+    <!--layout="@layout/header_main"/>-->
 </LinearLayout>
