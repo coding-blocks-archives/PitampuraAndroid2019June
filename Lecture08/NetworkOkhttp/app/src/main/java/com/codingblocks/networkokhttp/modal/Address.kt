@@ -1,4 +1,4 @@
-package com.codingblocks.networkokhttp
+package com.codingblocks.networkokhttp.modal
 
 data class Address(
     val city:String,

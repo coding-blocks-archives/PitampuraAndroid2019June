@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.codingblocks.networkokhttp.modal.User
+import com.codingblocks.networkokhttp.ui.UserAdapter
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import okhttp3.*
-import org.json.JSONArray
 import java.io.IOException
 import kotlin.coroutines.CoroutineContext
 

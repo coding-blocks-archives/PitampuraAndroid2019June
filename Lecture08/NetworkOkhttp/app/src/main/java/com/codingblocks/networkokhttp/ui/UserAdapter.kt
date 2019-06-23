@@ -1,10 +1,12 @@
-package com.codingblocks.networkokhttp
+package com.codingblocks.networkokhttp.ui
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.codingblocks.networkokhttp.R
+import com.codingblocks.networkokhttp.modal.User
 import kotlinx.android.synthetic.main.layout_users.view.*
 
 class UserAdapter(private val users:List<User>):
@@ -23,7 +25,7 @@ class UserAdapter(private val users:List<User>):
     }
 
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-        fun bind(user:User){
+        fun bind(user: User){
 
             with(itemView){
                 tvEmail.text = user.email
