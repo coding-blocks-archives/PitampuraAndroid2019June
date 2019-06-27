@@ -11,6 +11,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import kotlin.coroutines.CoroutineContext
 
 class SmartActivity : AppCompatActivity(), CoroutineScope {
@@ -23,15 +26,20 @@ class SmartActivity : AppCompatActivity(), CoroutineScope {
         setContentView(R.layout.activity_main)
 
         button.setOnClickListener {
-            launch {
-                val users = getUserRetrofit()
-                rvUsers.layoutManager = LinearLayoutManager(
-                    this@SmartActivity,
-                    RecyclerView.VERTICAL,
-                    false
-                )
-                rvUsers.adapter = UserAdapter(users)
-            }
+            val userApi = RetrofitClient.userApi
+
+
+            userApi.getUsersNormal().enqueue(object :Callback<List<User>>{
+                override fun onFailure(call: Call<List<User>>, t: Throwable) {
+                }
+
+                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+                    val data = response.body()
+                    rvUsers.layoutManager =
+                        LinearLayoutManager(this@SmartActivity,RecyclerView.VERTICAL,false)
+                    rvUsers.adapter = UserAdapter(data!!)
+                }
+            })
         }
 
     }
