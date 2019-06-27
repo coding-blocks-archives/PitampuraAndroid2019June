@@ -26,20 +26,28 @@ class SmartActivity : AppCompatActivity(), CoroutineScope {
         setContentView(R.layout.activity_main)
 
         button.setOnClickListener {
-            val userApi = RetrofitClient.userApi
+//            val userApi = RetrofitClient.userApi
+//
+//
+//            userApi.getUsersNormal().enqueue(object :Callback<List<User>>{
+//                override fun onFailure(call: Call<List<User>>, t: Throwable) {
+//                }
+//
+//                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+//                    val data = response.body()
+//                    rvUsers.layoutManager =
+//                        LinearLayoutManager(this@SmartActivity,RecyclerView.VERTICAL,false)
+//                    rvUsers.adapter = UserAdapter(data!!)
+//                }
+//            })
 
-
-            userApi.getUsersNormal().enqueue(object :Callback<List<User>>{
-                override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                }
-
-                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                    val data = response.body()
-                    rvUsers.layoutManager =
+            launch {
+                val users = getUserRetrofit()
+                rvUsers.layoutManager =
                         LinearLayoutManager(this@SmartActivity,RecyclerView.VERTICAL,false)
-                    rvUsers.adapter = UserAdapter(data!!)
-                }
-            })
+                    rvUsers.adapter = UserAdapter(users)
+
+            }
         }
 
     }
