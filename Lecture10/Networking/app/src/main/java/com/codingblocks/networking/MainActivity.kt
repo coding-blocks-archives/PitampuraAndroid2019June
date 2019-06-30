@@ -3,9 +3,10 @@ package com.codingblocks.networking
 import android.os.AsyncTask
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.getData
-import kotlinx.android.synthetic.main.activity_main.showData
-import org.json.JSONObject
+import kotlinx.android.synthetic.main.activity_main.githubRv
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -29,15 +30,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     inner class NetworkTask : AsyncTask<String, Int, String>() {
-        override fun onProgressUpdate(vararg values: Int?) {
-            super.onProgressUpdate(*values)
-        }
 
         override fun onPostExecute(result: String?) {
-            val jsonData = JSONObject(result)
-            val usersList =jsonData.getJSONArray("items")
-            val currentUser = usersList[0] as JSONObject
-            showData.text = currentUser.getString("login")
+            val userList = arrayListOf<Item>()
+            val githubData = Gson().fromJson(result, Example::class.java)
+            userList.addAll(githubData.items)
+//            val jsonData = JSONObject(result)
+//            val itemsList = jsonData.getJSONArray("items")
+//            for (i in 0..8) {
+//                val users = Users(
+//                    (itemsList[i] as JSONObject).getString("login"),
+//                    (itemsList[i] as JSONObject).getString("avatar_url"),
+//                    (itemsList[i] as JSONObject).getInt("id")
+//                )
+//                userList.add(users)
+//            }
+            githubRv.layoutManager = LinearLayoutManager(this@MainActivity)
+            githubRv.adapter = GithubUserAdapter(this@MainActivity, userList)
         }
 
         override fun doInBackground(vararg urls: String?): String {
