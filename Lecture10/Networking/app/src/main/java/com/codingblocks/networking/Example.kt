@@ -70,5 +70,10 @@ class Item {
     @SerializedName("score")
     @Expose
     var score: Double? = null
+    var photos = Photos("")
 
 }
+
+data class Photos(
+    val photos: String
+)
