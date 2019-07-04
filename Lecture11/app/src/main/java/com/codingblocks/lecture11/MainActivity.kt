@@ -3,6 +3,7 @@ package com.codingblocks.lecture11
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     private  val LOCATION_REQ = 123
 
+    private var myLat = 0.0
+    private var myLong = 0.0
+
     private var locationManager:LocationManager? = null
     override fun onLocationChanged(p0: Location?) {
         p0?.let {
@@ -26,6 +30,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 Accuracy ${it.accuracy}
                 Provider ${it.provider}
             """.trimIndent()
+
+            myLat = it.latitude
+            myLong = it.longitude
         }
     }
 
@@ -44,6 +51,15 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
         button.setOnClickListener {
             checkAndStartLocationUpdates()
+        }
+
+        buttonMap.setOnClickListener {
+            val intent = Intent(this,MapsActivity::class.java).apply {
+                putExtra("myLat",myLat)
+                putExtra("myLong",myLong)
+            }
+            startActivity(intent)
+
         }
     }
 
