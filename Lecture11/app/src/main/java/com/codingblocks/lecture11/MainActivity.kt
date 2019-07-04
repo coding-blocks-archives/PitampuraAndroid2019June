@@ -2,6 +2,7 @@ package com.codingblocks.lecture11
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,14 +11,22 @@ import android.location.LocationListener
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.LocationSettingsStatusCodes
 import kotlinx.android.synthetic.main.activity_main.*
 import java.security.Permission
 
 class MainActivity : AppCompatActivity(), LocationListener {
 
     private  val LOCATION_REQ = 123
+    private val CHECK_REQ = 121
 
     private var myLat = 0.0
     private var myLong = 0.0
@@ -50,7 +59,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
         setContentView(R.layout.activity_main)
 
         button.setOnClickListener {
-            checkAndStartLocationUpdates()
+            checkUserSettingsAndGetLocation()
         }
 
         buttonMap.setOnClickListener {
@@ -76,7 +85,65 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 LOCATION_REQ
             )
         }else{
-            startLocationUpdates()
+            getLocationSmart()
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLocationSmart(){
+        val client = LocationServices.getFusedLocationProviderClient(this)
+        client.lastLocation.apply {
+            addOnFailureListener{
+
+            }
+            addOnSuccessListener {
+                tvLocation.text = """
+                My Location ${it.latitude}, ${it.longitude}
+                Accuracy ${it.accuracy}
+                Provider ${it.provider}
+            """.trimIndent()
+
+                myLat = it.latitude
+                myLong = it.longitude
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CHECK_REQ){
+            if (resultCode == Activity.RESULT_OK){
+                checkAndStartLocationUpdates()
+            }else{
+                Toast.makeText(this,"Enable Location",Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun checkUserSettingsAndGetLocation(){
+
+        val locationRequest = LocationRequest().apply {
+            interval = 1000
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+
+        val request = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+            .build()
+        val client = LocationServices.getSettingsClient(this)
+
+        client.checkLocationSettings(request).apply {
+            addOnSuccessListener {
+                Log.i("PUI","success")
+                checkAndStartLocationUpdates()
+            }
+            addOnFailureListener{
+                val e = it as ApiException
+                if (e.statusCode == LocationSettingsStatusCodes.RESOLUTION_REQUIRED){
+                    val resolvable = it as ResolvableApiException
+                    resolvable.startResolutionForResult(this@MainActivity,CHECK_REQ)
+                }
+            }
         }
     }
 
@@ -89,7 +156,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                     return
                 }
             }
-            startLocationUpdates()
+            getLocationSmart()
         }
     }
 
