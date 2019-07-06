@@ -8,7 +8,7 @@ class TasksTable {
     data class Task (
         val id: Int?,
         val task: String,
-        val done: Boolean
+        var done: Boolean
     )
 
     companion object {
@@ -16,7 +16,7 @@ class TasksTable {
 
         val CMD_CREATE_TABLE = """
            CREATE TABLE $TABLE_NAME (
-           id INTEGER AUTO_INCREMENT,
+           id INTEGER PRIMARY KEY AUTOINCREMENT,
            task TEXT,
            done BOOLEAN
            );
@@ -30,6 +30,15 @@ class TasksTable {
 
             db.insert(TABLE_NAME, null, taskRow)
 
+        }
+
+        fun updateTask(db: SQLiteDatabase, task: Task) {
+
+            val taskRow = ContentValues()
+            taskRow.put("task", task.task)
+            taskRow.put("done", task.done)
+
+            db.update(TABLE_NAME, taskRow, "id = ?", arrayOf(task.id.toString()))
         }
 
         fun getAllTasks(db: SQLiteDatabase): ArrayList<Task> {

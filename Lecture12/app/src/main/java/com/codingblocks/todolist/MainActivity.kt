@@ -1,6 +1,7 @@
 package com.codingblocks.todolist
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -42,19 +43,22 @@ class MainActivity : AppCompatActivity() {
             taskAdapter.updateTasks(tasks)
         }
 
-//        lvTodolist.onItemClickListener = object : AdapterView.OnItemClickListener {
-//            override fun onItemClick(
-//                parent: AdapterView<*>?,
-//                view: View?,
-//                position: Int,
-//                id: Long
-//            ) {
-//
-//                tasks.removeAt(position)
-//                taskAdapter.notifyDataSetChanged()
-//            }
-//
-//        }
+        lvTodolist.onItemClickListener = object : AdapterView.OnItemClickListener {
+            override fun onItemClick(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+
+                val thisTask = taskAdapter.getItem(position)
+                thisTask.done = !thisTask.done
+                TasksTable.updateTask(tasksDb, thisTask)
+                tasks = TasksTable.getAllTasks(tasksDb)
+                taskAdapter.updateTasks(tasks)
+            }
+
+        }
     }
 
     class TaskAdapter(var tasks: ArrayList<TasksTable.Task>): BaseAdapter() {
@@ -69,6 +73,9 @@ class MainActivity : AppCompatActivity() {
             val li = parent!!.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view = li.inflate(android.R.layout.simple_list_item_1, parent, false)
             view.findViewById<TextView>(android.R.id.text1).text = getItem(position).task
+            if (getItem(position).done) {
+                view.findViewById<TextView>(android.R.id.text1).setTextColor(Color.GRAY)
+            }
 
             return view
         }
