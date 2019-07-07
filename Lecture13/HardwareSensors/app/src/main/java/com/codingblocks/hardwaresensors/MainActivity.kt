@@ -1,6 +1,7 @@
 package com.codingblocks.hardwaresensors
 
 import android.content.Context
+import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -8,6 +9,7 @@ import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,6 +38,18 @@ class MainActivity : AppCompatActivity() {
                     ay: ${event?.values?.get(1)}
                     az: ${event?.values?.get(2)}
                 """.trimIndent())
+
+                val ax = event?.values?.get(0) ?: 0f
+                val ay = event?.values?.get(1) ?: 0f
+                val az = event?.values?.get(2) ?: 0f
+
+                clBackground.setBackgroundColor(
+                    Color.rgb(
+                        (((ax + 12) / 24) * 255).toInt(),
+                        (((ay + 12) / 24) * 255).toInt(),
+                        (((az + 12) / 24) * 255).toInt()
+                    )
+                )
             }
         }
 
