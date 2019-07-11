@@ -1,5 +1,6 @@
 package com.example.roomnotes
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -15,7 +16,7 @@ interface TodoDao {
 
 
     @Query("Select * FROM Todo")
-    fun getAllTodo(): List<Todo>
+    fun getAllTodo(): LiveData<List<Todo>>
 
     @Query("Select * FROM Todo WHERE task = :task")
     fun getAllTodoWithDone(task:String):List<Todo>
