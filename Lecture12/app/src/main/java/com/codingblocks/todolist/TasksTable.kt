@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 
 class TasksTable {
 
-    data class Task (
+    data class Task(
         val id: Int?,
         val task: String,
         var done: Boolean
@@ -60,7 +60,7 @@ class TasksTable {
             val taskCol = cursor.getColumnIndex("task")
             val doneCol = cursor.getColumnIndex("done")
 
-            while (cursor.moveToNext()) {
+            do {
                 val task = Task(
                     cursor.getInt(idCol),
                     cursor.getString(taskCol),
@@ -68,7 +68,7 @@ class TasksTable {
                 )
 
                 tasks.add(task)
-            }
+            } while (cursor.moveToNext())
             cursor.close()
             return tasks
         }

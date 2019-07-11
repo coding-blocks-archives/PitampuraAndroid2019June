@@ -23,7 +23,12 @@ class TaskAdapter(var tasks: ArrayList<TasksTable.Task>) : BaseAdapter() {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val li = parent!!.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = li.inflate(android.R.layout.simple_list_item_1, parent, false)
-        view.findViewById<TextView>(android.R.id.text1).text = getItem(position).task
+        view.findViewById<TextView>(android.R.id.text1).apply {
+            text = getItem(position).task
+            setOnClickListener {
+                listItemClickListener?.textviewClick(text as String)
+            }
+        }
         view.setOnClickListener {
             listItemClickListener?.lisitemClick(getItem(position), position)
         }

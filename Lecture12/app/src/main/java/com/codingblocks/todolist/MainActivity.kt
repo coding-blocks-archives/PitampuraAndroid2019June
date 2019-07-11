@@ -29,6 +29,10 @@ class MainActivity : AppCompatActivity() {
 
         val taskAdapter = TaskAdapter(tasks)
         taskAdapter.listItemClickListener = object : ListItemClickListener {
+            override fun textviewClick(text: String) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
             override fun lisitemClick(task: TasksTable.Task, position: Int) {
                 val thisTask = task
                 thisTask.done = !thisTask.done
