@@ -19,7 +19,7 @@ class Main2Activity : AppCompatActivity() {
 
         val service = retrofit.create(GitHubService::class.java)
 
-        service.listRepos().enqueue(retrofitCallback { throwable, response ->
+        service.listRepos("search","Pulkit Aggarwal").enqueue(retrofitCallback { throwable, response ->
             response?.let {
                 if (it.isSuccessful) {
                     runOnUiThread {
