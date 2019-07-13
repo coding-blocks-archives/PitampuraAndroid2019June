@@ -19,12 +19,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        var verificationId: String = ""
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(p0: PhoneAuthCredential?) {
                 Toast.makeText(this@MainActivity, "Verification Completed", Toast.LENGTH_LONG).show()
-                signUpWithPhone(p0)
+                p0?.let { signUpWithPhone(it) }
             }
 
             override fun onVerificationFailed(p0: FirebaseException?) {
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
             override fun onCodeSent(p0: String?, p1: PhoneAuthProvider.ForceResendingToken?) {
                 super.onCodeSent(p0, p1)
                 Toast.makeText(this@MainActivity, "Code Sent Completed", Toast.LENGTH_LONG).show()
+                verificationId = p0 ?: ""
 
             }
 
@@ -76,10 +78,14 @@ class MainActivity : AppCompatActivity() {
                 callbacks
             ) // OnVerificationStateChangedCallbacks
         }
+        verify.setOnClickListener {
+            val credential = PhoneAuthProvider.getCredential(verificationId,edtvPass.text.toString())
+            signUpWithPhone(credential)
+        }
     }
 
-    private fun signUpWithPhone(p0: PhoneAuthCredential?) {
-        auth.signInWithCredential(p0 as AuthCredential)
+    private fun signUpWithPhone(p0: PhoneAuthCredential) {
+        auth.signInWithCredential(p0)
             .addOnCompleteListener {
 
             }.addOnSuccessListener {
