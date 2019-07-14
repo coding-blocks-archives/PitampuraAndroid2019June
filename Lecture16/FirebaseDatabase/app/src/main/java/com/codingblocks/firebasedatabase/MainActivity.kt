@@ -50,6 +50,16 @@ class MainActivity : AppCompatActivity() {
                 }
 
             })
+        val chat = Chat()
+        chat.text = "New text Added"
+        chat.time = "12 PM"
+//        FirebaseDatabase.getInstance().reference.child("messages/user1/chat1/text")
+//            .setValue("New Text Added")
+        val ref = FirebaseDatabase.getInstance().reference.child("messages/user1/")
+        val key = ref.push().key
+        ref.child("$key/")
+            .setValue(chat)
+
     }
 }
 
