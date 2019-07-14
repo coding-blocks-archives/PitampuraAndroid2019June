@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity() {
                 .setContentTitle("Simple Title")
                 .setContentText("This is sample contetnt of a simple notification")
                 .setContentIntent(pi)
+                .setAutoCancel(true)
+                .setOngoing(true)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .build()
