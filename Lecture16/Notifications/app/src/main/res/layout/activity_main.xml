@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+
+    <Button
+            android:text="Simple Notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" tools:layout_editor_absoluteY="205dp"
+            tools:layout_editor_absoluteX="167dp" android:id="@+id/button"/>
+    <Button
+            android:text="Clickable Notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" tools:layout_editor_absoluteY="282dp"
+            tools:layout_editor_absoluteX="155dp" android:id="@+id/button2"/>
+    <Button
+            android:text="Action Notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" tools:layout_editor_absoluteY="341dp"
+            tools:layout_editor_absoluteX="161dp" android:id="@+id/button3"/>
+
+</LinearLayout>
