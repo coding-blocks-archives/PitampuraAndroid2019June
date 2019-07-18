@@ -1,9 +1,11 @@
 package com.codingblocks.camerax
 
 import android.content.pm.PackageManager
+import android.graphics.Matrix
 import android.os.Bundle
 import android.util.Rational
 import android.util.Size
+import android.view.Surface
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -67,10 +69,31 @@ class MainActivity : AppCompatActivity() {
             val parent = textureView.parent as ViewGroup
             parent.removeView(textureView)
             parent.addView(textureView, 0)
-
+            updateTransform()
             textureView.surfaceTexture = it.surfaceTexture
         }
 
         CameraX.bindToLifecycle(this, preview,imageCapture)
+    }
+
+    private fun updateTransform() {
+        val matrix = Matrix()
+
+//compute center
+        val centerX = textureView.width / 2f
+        val centerY = textureView.height / 2f
+
+        val rotationDegress = when (textureView.display.rotation) {
+            Surface.ROTATION_0 -> 0
+            Surface.ROTATION_90 -> 90
+            Surface.ROTATION_180 -> 180
+            Surface.ROTATION_270 -> 270
+            else -> return
+
+        }
+
+        matrix.postRotate(-rotationDegress.toFloat(), centerX, centerY)
+
+        textureView.setTransform(matrix)
     }
 }
