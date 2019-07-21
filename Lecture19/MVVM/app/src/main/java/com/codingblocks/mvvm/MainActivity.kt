@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         mainActivityViewMode.getUser().observe(this, Observer {user ->
 //            imageView.
             textView.text = user.name
-            textView2.text = user.userName
+            textView2.text = user.login
 
         })
     }

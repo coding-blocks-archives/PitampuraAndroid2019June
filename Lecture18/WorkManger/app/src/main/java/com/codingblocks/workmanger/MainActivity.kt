@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         ).setConstraints(constraints)
             .build()
 
-        WorkManager.getInstance(this).enqueue(repeatingWork`)
+        WorkManager.getInstance(this).enqueue(repeatingWork)
     }
 
     private fun scheduleTask() {

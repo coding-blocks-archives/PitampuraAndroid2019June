@@ -1,7 +1,7 @@
 package com.codingblocks.mvvm.models
 
 data class User(
-    val imageUrl:String,
+    val avatar_url:String,
     val name:String,
-    val userName:String
+    val login:String
 )
