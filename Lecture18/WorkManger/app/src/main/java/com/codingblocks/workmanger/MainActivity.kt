@@ -6,8 +6,8 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,13 +21,31 @@ class MainActivity : AppCompatActivity() {
                 NotificationManager.IMPORTANCE_DEFAULT))
         }
 
-        scheduleTask()
+//        scheduleTask()
+        scheduleRepeatingTasks()
+    }
+
+    private fun scheduleRepeatingTasks() {
+        val constraints = Constraints.Builder().apply {
+            setRequiredNetworkType(NetworkType.UNMETERED)
+            setRequiresCharging(true)
+            setRequiresDeviceIdle(false)
+            setRequiresStorageNotLow(true)
+        }.build()
+        val repeatingWork = PeriodicWorkRequestBuilder<NetworkRequestWorker>(
+            1,
+            TimeUnit.DAYS
+        ).setConstraints(constraints)
+            .build()
+
+        WorkManager.getInstance(this).enqueue(repeatingWork`)
     }
 
     private fun scheduleTask() {
         val workerRequest = OneTimeWorkRequestBuilder<NetworkRequestWorker>()
+            .setInitialDelay(2,TimeUnit.MINUTES)
             .build()
 
-        WorkManager.getInstance().enqueue(workerRequest)
+        WorkManager.getInstance(this).enqueue(workerRequest)
     }
 }
