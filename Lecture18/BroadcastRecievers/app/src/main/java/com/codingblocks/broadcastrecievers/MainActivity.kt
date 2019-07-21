@@ -16,4 +16,9 @@ class MainActivity : AppCompatActivity() {
         }
         registerReceiver(CallReciever(), intentFilter)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(CallReciever())
+    }
 }
