@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.codingblocks.mvvm.viewmodels.MainActivityViewModel
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,8 +18,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        mainActivityViewMode.queryRepo()
+
+
         mainActivityViewMode.getUser().observe(this, Observer {user ->
-//            imageView.
+            Picasso.get().load(user.avatar_url).into(imageView)
             textView.text = user.name
             textView2.text = user.login
 
